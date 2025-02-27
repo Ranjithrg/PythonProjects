@@ -1,0 +1,106 @@
+# ஊழியர் தரவுகளை நிர்வகிக்க ஒரு வகுப்பு (Class)
+class Employee:
+    def __init__(self, emp_id, name, age, department, salary):
+        self.emp_id = emp_id  # ஊழியர் ஐடி
+        self.name = name  # பெயர்
+        self.age = age  # வயது
+        self.department = department  # துறை
+        self.salary = salary  # சம்பளம்
+
+    def display(self):
+        return "{} | {} | {} | {} | {}".format(self.emp_id, self.name, self.age, self.department, self.salary)
+
+# அனைத்து ஊழியர்களையும் நிர்வகிக்கும் வகுப்பு (Class)
+class EmployeeManager:
+    def __init__(self):
+        self.employees = []  # ஊழியர்களை சேமிக்க ஒரு List
+
+    # பல ஊழியர்களை சேர்க்க
+    def add_employees(self):
+        while True:
+            emp_id = input("Enter Employee ID (or type 'done' to stop): ")
+            if emp_id.lower() == 'done':
+                break  # Exit if user types 'done'
+            name = input("Enter Name: ")
+            age = input("Enter Age: ")
+            department = input("Enter Department: ")
+            salary = input("Enter Salary: ")
+            self.employees.append(Employee(emp_id, name, age, department, salary))
+            print("✅ Employee Added!\n")
+
+    # அனைத்து ஊழியர்களையும் காண்பிக்க
+    def view_employees(self):
+        if not self.employees:
+            print("❌ No records found!\n")
+        else:
+            print("\nID | Name | Age | Department | Salary")
+            for emp in self.employees:
+                print(emp.display())
+            print()
+
+    # பல ஊழியர்களை புதுப்பிக்க
+    def update_employees(self):
+        while True:
+            emp_id = input("Enter Employee ID to Update (or type 'done' to stop): ")
+            if emp_id.lower() == 'done':
+                break
+            for emp in self.employees:
+                if emp.emp_id == emp_id:
+                    emp.name = input("Enter New Name: ")
+                    emp.age = input("Enter New Age: ")
+                    emp.department = input("Enter New Department: ")
+                    emp.salary = input("Enter New Salary: ")
+                    print("✅ Employee Updated!\n")
+                    break
+            else:
+                print("❌ Employee Not Found!\n")
+
+    # பல ஊழியர்களை நீக்க
+    def delete_employees(self):
+        while True:
+            emp_id = input("Enter Employee ID to Delete (or type 'done' to stop): ")
+            if emp_id.lower() == 'done':
+                break
+            self.employees = [emp for emp in self.employees if emp.emp_id != emp_id]
+            print("✅ Employee Deleted!\n")
+
+    # ஊழியரை தேட
+    def search_employee(self):
+        keyword = input("Enter Name or Department to Search: ").lower()
+        found = [emp for emp in self.employees if keyword in emp.name.lower() or keyword in emp.department.lower()]
+        if found:
+            print("\nMatching Employees:")
+            for emp in found:
+                print(emp.display())
+            print()
+        else:
+            print("❌ No matching records found!\n")
+
+# மென் தொகுதி (Main Program)
+manager = EmployeeManager()
+while True:
+    print("\n📊 Employee Management System")
+    print("1. Add Employees (Multiple)")
+    print("2. View Employees")
+    print("3. Update Employees (Multiple)")
+    print("4. Delete Employees (Multiple)")
+    print("5. Search Employee")
+    print("6. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        manager.add_employees()  # பல ஊழியர்களை சேர்க்க
+    elif choice == "2":
+        manager.view_employees()  # அனைத்து ஊழியர்களையும் காண்பிக்க
+    elif choice == "3":
+        manager.update_employees()  # பல ஊழியர்களை புதுப்பிக்க
+    elif choice == "4":
+        manager.delete_employees()  # பல ஊழியர்களை நீக்க
+    elif choice == "5":
+        manager.search_employee()  # ஊழியரை தேட
+    elif choice == "6":
+        print("🚀 Exiting Employee Management System. Goodbye!")
+        break  # Exit Program
+    else:
+        print("❌ Invalid choice! Try again.\n")
