@@ -1,0 +1,37 @@
+class ContactBook:
+    def __init__(self):
+        self.contacts = []
+
+    def add_contact(self, name, phone):
+        self.contacts.append((name, phone))
+        print("Contact added successfully!")
+
+    def remove_contact(self, name):
+        self.contacts = [c for c in self.contacts if c[0] != name]
+        print("Contact removed successfully!")
+
+    def search_contact(self, name):
+        for contact in self.contacts:
+            if contact[0].lower() == name.lower():
+                print("Contact Found:", contact[0], "-", contact[1])
+                return
+        print("Contact not found.")
+
+    def display_contacts(self):
+        if not self.contacts:
+            print("No contacts available.")
+        else:
+            print("Contact List:")
+            for contact in self.contacts:
+                print(contact[0], "-", contact[1])
+
+
+# Example Usage
+book = ContactBook()
+book.add_contact("Alice", "1234567890")
+book.add_contact("Bob", "9876543210")
+book.display_contacts()
+book.search_contact("Alice")
+book.remove_contact("Bob")
+book.display_contacts()
+
