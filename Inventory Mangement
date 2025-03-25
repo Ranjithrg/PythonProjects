@@ -1,0 +1,38 @@
+class InventoryManagement:
+    def __init__(self):
+        self.inventory = {}
+    
+    def add_product(self, product, quantity):
+        if product in self.inventory:
+            self.inventory[product] += quantity
+        else:
+            self.inventory[product] = quantity
+        print("Added", quantity, product)
+    
+    def remove_product(self, product, quantity):
+        if product in self.inventory and self.inventory[product] >= quantity:
+            self.inventory[product] -= quantity
+            if self.inventory[product] == 0:
+                del self.inventory[product]
+            print("Removed", quantity, product)
+        else:
+            print("Error: Insufficient stock or product not found")
+    
+    def check_stock(self, product):
+        return self.inventory.get(product, "Product not found")
+    
+    def display_inventory(self):
+        if not self.inventory:
+            print("Inventory is empty")
+        else:
+            for product, quantity in self.inventory.items():
+                print(product, "-", quantity, "units")
+
+# Example Usage
+inventory = InventoryManagement()
+inventory.add_product("Laptop", 10)
+inventory.add_product("Mouse", 50)
+inventory.display_inventory()
+inventory.remove_product("Laptop", 5)
+inventory.check_stock("Mouse")
+inventory.display_inventory()
